@@ -26,6 +26,7 @@ def registration_form():
         dob = st.date_input("Date of Birth", min_value=datetime.date(1900, 1, 1), max_value=datetime.date.today())
         sex = st.selectbox("Sex", ["Male", "Female"], index=1)
         address = st.text_area("Address", value="San Francisco")
+        phone = st.text_input("Phone Number", value="123456789")
         exercise_habits = st.text_input("Exercise Habits", value="Once a week")
         family_history = st.text_area("Family History")
         diet = st.text_input("Diet", value="Heavy carbs, less protein and veggies")
@@ -41,6 +42,7 @@ def registration_form():
             st.session_state['dob'] = dob.strftime('%Y-%m-%d')
             st.session_state['sex'] = sex
             st.session_state['address'] = address
+            st.session_state['phone'] = phone
 
             st.session_state['exercise_habits'] = exercise_habits
             st.session_state['family_history'] = family_history
