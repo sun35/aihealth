@@ -2,6 +2,10 @@ from typing import Dict, List
 from openai import OpenAI
 from datetime import datetime
 import os
+import streamlit as st
+import requests
+from PIL import Image
+from io import BytesIO
 
 # sex: "man" | "woman"
 # dob: YYYY-MM-DD
@@ -19,6 +23,15 @@ class Issue():
 class Family():
   relationship: str;
   issue: str;
+
+def show_image_from_url(url: str):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Check if the request was successful
+        image = Image.open(BytesIO(response.content))
+        st.image(image, caption="Generated Stretches", use_column_width=True)
+    except requests.RequestException as e:
+        st.error(f"Error loading image from URL: {e}")
 
 def getAge(birthdate):
   # Convert the birthdate string to a datetime object
@@ -84,8 +97,3 @@ def makeImage(sex: str, dob: str, occupation: str, location: str, issues: List[D
   image_url = response.data[0].url
 
   print(image_url)
-
-makeImage("woman", "2002-01-01", "maid", "Wantugu, Ghana", 
-          [{"type": "back pain", "since": "earlier last year", "thingsDone": []}], 
-          [{"type": "anemia", "since": "since 10 years old", "thingsDone": []}], 
-          [])
