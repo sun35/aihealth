@@ -16,16 +16,16 @@ the patient, you will introduce yourself and mention what you know about the pat
 the conversation."""
 
 sample_patient = {
-    "Name": "Jane Doe",
-    "Occupation": "Carrot Farmer",
-    "DOB": "09/21/2006",
+    "Name": "Shruthi Sundar",
+    "Occupation": "Cassava Farmer",
+    "DOB": "09/22/1995",
     "Gender": "Female",
-    "Diagnosis": "Malaria, malnutrition",
-    "Symptoms": ["fever", "chills", "headache", "nausea", "fatigue"],
-    "Exercise": "Farming 8h of the day, every day, dance",
+    "Diagnosis": "lower back pain due to repetitive use",
+    "Symptoms": ["back pain", "fatigue"],
+    "Exercise": "Farming 8h of the day, every day, dance 1h a week",
     "Diet": "Cassava, root vegetables",
     "Family History": "hypertension, diabetes",
-    "Treatment": "Malaria pills"
+    "Treatment": "lower back pain: daily stretching, core exercises long term to strengthen back, rest for 1 week. diet could also be more varied and nutritious"
 }
 def get_patient_context(patient: dict):
     patient_context = f"""

@@ -21,16 +21,16 @@ def registration_form():
     st.header("Patient Profile")
 
     with st.form("registration_form"):
-        first_name = st.text_input("First Name", value="Jane")
-        last_name = st.text_input("Last Name", value="Doe")
-        dob = st.date_input("Date of Birth", min_value=datetime.date(1900, 1, 1), max_value=datetime.date.today())
+        first_name = st.text_input("First Name", value="Shruthi")
+        last_name = st.text_input("Last Name", value="Sundar")
+        dob = st.date_input("Date of Birth", min_value=datetime.date(1995, 9, 22), max_value=datetime.date.today())
         sex = st.selectbox("Sex", ["Male", "Female"], index=1)
-        address = st.text_area("Address", value="San Francisco")
+        address = st.text_area("Address/Locale", value="1h away from Mankessim")
         phone = st.text_input("Phone Number", value="123456789")
-        exercise_habits = st.text_input("Exercise Habits", value="Once a week")
+        exercise_habits = st.text_input("Exercise Habits", value="Dance once a week, daily work on farm")
         family_history = st.text_area("Family History")
-        diet = st.text_input("Diet", value="Heavy carbs, less protein and veggies")
-        occupation = st.text_input("Occupation", value="Farmer")
+        diet = st.text_input("Diet", value="Root vegetable heavy")
+        occupation = st.text_input("Occupation", value="Cassava Farmer")
 
         submitted = st.form_submit_button("Submit")
 
@@ -54,9 +54,9 @@ def physical_feeling_form():
     st.header("How Are You Feeling?")
 
     with st.form("intake"):
-        condition = st.text_area("How are you feeling today?")
-        conditionSince = st.text_input("How long have you been feeling this way?")
-        stepsTaken = st.text_area("What steps have you taken to try to feel better?")
+        condition = st.text_area("How are you feeling today?", value="back pain, tired")
+        conditionSince = st.text_input("How long have you been feeling this way?", value="few weeks")
+        stepsTaken = st.text_area("What steps have you taken to try to feel better?", value="rest when I can")
 
         submitted = st.form_submit_button("Submit")
 
@@ -108,10 +108,14 @@ else:
     st.header("Thank you for providing your information!")
     st.write("Registration Details:")
     st.write(f"**Name:** {st.session_state['first_name']} {st.session_state['last_name']}")
-    st.write(f"**Age:** {st.session_state['age']}")
-    st.write(f"**Gender:** {st.session_state['gender']}")
+    st.write(f"**Age:** {st.session_state['dob']}")
+    st.write(f"**Gender:** {st.session_state['sex']}")
     # st.write(f)
     st.write(f"**Address:** {st.session_state['address']}")
-    st.write("**Physical Symptoms:**")
-    for symptom in st.session_state['symptoms']:
-        st.write("-", symptom)
+    st.write(f"**Physical Symptoms:** {st.session_state['condition']}")
+
+    st.write(f"**Clinician Notes:** Diagnosis: Lower back pain due to repetitive use. Could use more varied diet")
+    st.write(f"**Treatment**: Daily stretching, core exercises, rest for the next 2 weeks. \n Diet Suggestions: More protein, veggies, varied nutrients in diet.")
+
+    st.write("**Use Left Menu to learn more about diagnosis and treatment over chat!**")
+
