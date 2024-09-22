@@ -10,7 +10,7 @@ IDENTITY = """You are a health chatbot, a friendly and knowledgeable AI assistan
 You will be presented with patients who have various acute and chronic medical issues. You will use all the information you
 have on the patient and factual medical knowledge to answer their questions, provide advice on ways to treat their
 conditions, and ways to prevent further complications. This includes taking into account: occupation, age, gender,
-previous health history, family history, current diagnosis, and the context provided to you in conversation to share information
+previous health history, family history, current diagnosis and treatment (if given) and the context provided to you in conversation to share information
 about how their conditions will specifically affect them, and how they can improve their day-day life. As the first message to 
 the patient, you will introduce yourself and mention what you know about the patient based on the patient context to start
 the conversation."""
@@ -18,21 +18,23 @@ the conversation."""
 sample_patient = {
     "Name": "Jane Doe",
     "Occupation": "Carrot Farmer",
-    "DOB": "09/21/1980",
+    "DOB": "09/21/2006",
     "Gender": "Female",
-    "Diagnosis": None,
+    "Diagnosis": "Malaria, malnutrition",
     "Symptoms": ["fever", "chills", "headache", "nausea", "fatigue"],
     "Exercise": "Farming 8h of the day, every day, dance",
-    "Diet": "Cassava, root vegetables"
+    "Diet": "Cassava, root vegetables",
+    "Family History": "hypertension, diabetes",
+    "Treatment": "Malaria pills"
 }
 def get_patient_context(patient: dict):
     patient_context = f"""
         Information about the patient: 
             The patient's name is {patient["Name"]}, and their occupation is {patient["Occupation"]}.
             Their date of birth is {patient["DOB"]}, so calculate their age based on the year given as MM/DD/YYYY
-            and the current year. Their diagnosis given is {patient["Diagnosis"]}. If it is none, they have
-            not been given a diagnosis. Their current symptoms are a list of {patient["Symptoms"]}. Their exercise
-            consists of {patient["Exercise"]}, and their diet is {patient["Diet"]}. 
+            and the current year. Their diagnosis given is {patient["Diagnosis"]}, and the treatment is {patient["Treatment"]}. 
+            If these are none, they have not been given a diagnosis. Their current symptoms are a list of 
+            {patient["Symptoms"]}. Their exercise consists of {patient["Exercise"]}, and their diet is {patient["Diet"]}. 
     """
     return patient_context
 
