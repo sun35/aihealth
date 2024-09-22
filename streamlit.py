@@ -1,6 +1,8 @@
 import streamlit as st
 import datetime
-from pages.Image import makeImage, show_image_from_url
+import streamlit as st
+from models.text_model import MedicalChatbot, TASK_SPECIFIC_INSTRUCTIONS
+
 
 # def image_page():
 #     st.header("Images")
@@ -19,19 +21,15 @@ def registration_form():
     st.header("Patient Profile")
 
     with st.form("registration_form"):
-        first_name = st.text_input("First Name")
-        last_name = st.text_input("Last Name")
+        first_name = st.text_input("First Name", value="Jane")
+        last_name = st.text_input("Last Name", value="Doe")
         dob = st.date_input("Date of Birth", min_value=datetime.date(1900, 1, 1), max_value=datetime.date.today())
-        sex = st.selectbox("Sex", ["Male", "Female"])
-        address = st.text_area("Address")
-        exercise_habits = st.text_input("Exercise Habits")
+        sex = st.selectbox("Sex", ["Male", "Female"], index=1)
+        address = st.text_area("Address", value="San Francisco")
+        exercise_habits = st.text_input("Exercise Habits", value="Once a week")
         family_history = st.text_area("Family History")
-        diet = st.text_input("Diet")
-        if diet == "Other":
-            diet_details = st.text_input("Please specify your diet")
-        else:
-            diet_details = diet
-        occupation = st.text_input("Occupation")
+        diet = st.text_input("Diet", value="Heavy carbs, less protein and veggies")
+        occupation = st.text_input("Occupation", value="Farmer")
 
         submitted = st.form_submit_button("Submit")
 
@@ -46,26 +44,26 @@ def registration_form():
 
             st.session_state['exercise_habits'] = exercise_habits
             st.session_state['family_history'] = family_history
-            st.session_state['diet'] = diet_details
+            st.session_state['diet'] = diet
             st.session_state['occupation'] = occupation
 
 def physical_feeling_form():
     # Display the physical feeling form
     st.header("How Are You Feeling?")
 
-    symptoms = st.multiselect(
-        "Select your current physical symptoms:", 
-        ["No symptoms", "Pain", "Discomfort", "Nausea", "Headache", "Fatigue", "Dizziness", "Other"]
-    )
+    with st.form("intake"):
+        condition = st.text_area("How are you feeling today?")
+        conditionSince = st.text_input("How long have you been feeling this way?")
+        stepsTaken = st.text_area("What steps have you taken to try to feel better?")
 
-    if "Other" in symptoms:
-        other_symptoms = st.text_input("Please describe other symptoms:")
-    else:
-        other_symptoms = ""
+        submitted = st.form_submit_button("Submit")
 
-    if st.button("Submit"):
-        st.session_state['symptoms'] = symptoms + [other_symptoms] if other_symptoms else symptoms
-        st.session_state['feeling_submitted'] = True
+        if submitted:
+            # Save the user's information (or do something with the data)
+            st.session_state['condition'] = condition
+            st.session_state['conditionSince'] = conditionSince
+            st.session_state['stepsTaken'] = stepsTaken
+            st.session_state['feeling_submitted'] = True
 
 # Main logic
 if 'registered' not in st.session_state:
@@ -78,11 +76,32 @@ if not st.session_state['registered']:
 elif not st.session_state['feeling_submitted']:
     physical_feeling_form()
 # elif st.session_state['registered'] and st.session_state['feeling_submitted']:
-#     sex = st.session_state["sex"]
-#     dob = st.session_state["dob"]
-#     address = st.session_state["address"]
-#     occupation = st.session_state["occupation"]
-#     image_page()
+#   if "messages" not in st.session_state:
+#         st.session_state.messages = [
+#             {'role': "user", "content": TASK_SPECIFIC_INSTRUCTIONS},
+#             {'role': "assistant", "content": "Understood"},
+#         ]
+
+#   chatbot = MedicalChatbot(st.session_state)
+#   response_placeholder = st.empty()
+#   initial_welcome = chatbot.process_user_input("introduce yourself")
+#   response_placeholder.markdown(initial_welcome)
+
+#   if len(st.session_state.messages) >= 5: 
+#       for message in st.session_state.messages[7:]:
+#           # ignore tool use blocks
+#           if isinstance(message["content"], str):
+#               with st.chat_message(message["role"]):
+#                   st.markdown(message["content"])
+
+#   if user_message := st.chat_input("Ask questions here"):
+#       st.chat_message("user").markdown(user_message)
+
+#       with st.chat_message("assistant"):
+#           with st.spinner("Thinking..."):
+#               response_placeholder = st.empty()
+#               full_response = chatbot.process_user_input(user_message)
+#               response_placeholder.markdown(full_response)
 else:
     st.header("Thank you for providing your information!")
     st.write("Registration Details:")
